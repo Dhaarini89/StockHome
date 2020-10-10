@@ -1,0 +1,50 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.stockhome.my.example.stockhome.MainActivity">
+
+  <item
+      android:id="@+id/Main_Menu"
+      android:orderInCategory="100"
+      android:title="Main_Menu"
+      app:showAsAction="always"
+      android:icon="@drawable/ic_more_vert_black_24dp" >
+      
+    <menu>
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_share"
+        app:showAsAction="never" />
+      <item
+          android:id="@+id/action_contact"
+          android:orderInCategory="100"
+          android:title="@string/action_contact"
+          android:icon="@drawable/ic_email_black_24dp"
+          app:showAsAction="never" />
+      <item
+          android:id="@+id/action_reminder"
+          android:icon="@drawable/remind"
+          android:orderInCategory="100"
+          android:title="Remind Me"
+          app:showAsAction="never" />
+      <item
+          android:id="@+id/action_help"
+          android:title="@string/action_help"
+          android:orderInCategory="100"
+          android:icon="@drawable/ic_help_black_24dp"
+          app:showAsAction="always" />
+
+        <item
+            android:id="@+id/action_exit"
+            android:orderInCategory="100"
+            android:title="@string/action_exit"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            app:showAsAction="never" />
+    </menu>
+
+</item>
+
+</menu>

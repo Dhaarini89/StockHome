@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Grocery Tracker</string>
+    <string name="action_share">Share List</string>
+    <string name="action_stock">Out of Stock</string>
+    <string name="action_trash">Trash</string>
+    <string name="action_contact">Contact Us</string>
+    <string name="action_exit">Exit</string>
+    <string name="action_help">Help</string>
+    <string name="action_save">Save</string>
+    <string name="remove">Remove a Product</string>
+    <string name="OUT_OF_STOCK">Out of Stock Items</string>
+    <string name="In_Progress">Items in Use</string>
+    <string name="IN_STOCK">InSTOCK</string>
+    <string name="action_add">Add</string>
+    <string name="outofstock_list">OUT OF STOCK LIST</string>
+    <string name="yellow_list">Items in Use</string>
+    <string name="spinner_title">Category</string>
+</resources>

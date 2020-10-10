@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="track.groceries.home">
+
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/gtrack"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/gtrack"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="track.groceries.home.StationActivity"></activity>
+        <activity android:name="track.groceries.home.CerealsActivity" />
+        <activity android:name="track.groceries.home.OilsActivity" />
+        <activity android:name="track.groceries.home.YellowActivity"
+            android:label="@string/In_Progress"/>
+        <activity android:name="track.groceries.home.DeleteActivity"
+            android:label="@string/OUT_OF_STOCK"/>
+        <activity android:name="track.groceries.home.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="track.groceries.home.Notification_Reciever"
+            android:enabled="false">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+        </intent-filter>
+        </receiver>
+
+
+        <activity
+            android:name="track.groceries.home.ShowStockActivity"
+            android:label="@string/outofstock_list" />
+        <activity android:name="track.groceries.home.ToiletActivity" />
+        <activity android:name="track.groceries.home.SpiceActivity" />
+        <activity android:name="track.groceries.home.DiaryActivity" />
+        <activity android:name="track.groceries.home.PulseActivity" />
+        <activity android:name="track.groceries.home.ListLoadActivity" />
+        <activity android:name="track.groceries.home.NextActivity" />
+        <activity
+            android:name="track.groceries.home.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="track.groceries.home.NotificationActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity="" />
+    </application>
+
+</manifest>

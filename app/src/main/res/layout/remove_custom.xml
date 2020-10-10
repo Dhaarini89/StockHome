@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFCDD2">
+
+    <TextView
+        android:id="@+id/remove_form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:text="Remove A Product"
+        android:textColor="#ce3232"
+        android:textSize="20sp"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/Category"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/remove_form_title"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:text="Select Category"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/ProductValue"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Category"
+        android:text="Select the Product"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textSize="15sp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/remove_form_title"
+        android:layout_toRightOf="@+id/Category"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
+        android:background="@drawable/layoutborder"
+        android:prompt="@string/spinner_title" />
+
+
+    <Spinner
+        android:id="@+id/Product"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:visibility="gone"
+        android:layout_below="@+id/spinner"
+        android:layout_toRightOf="@+id/ProductValue"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textSize="20sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/Product"
+        android:id="@+id/Remove"
+        android:layout_toLeftOf="@+id/Remove"
+        android:text="REMOVE"
+        android:textColor="#fff" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/Product"
+        android:layout_toRightOf="@+id/ProductValue"
+        android:id="@+id/Cancel"
+        android:text="CANCEL"
+        android:textColor="#fff" />
+</RelativeLayout>
+
+
+
