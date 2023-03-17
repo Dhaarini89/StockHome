@@ -8,14 +8,7 @@ import android.os.Bundle;
 import track.groceries.home.R;
 
 public class ListLoadActivity extends AppCompatActivity {
-    FruitDbAdapter Fruithelper;
-    PulseDbAdapter Pulsehelper;
-    ToiletDbAdapter Toilethelper;
-    DiaryDbAdapter Diaryhelper;
-    SpiceDbAdapter Spicehelper;
-    OilsDbAdapter Oilshelper;
-    CerealsDbAdapter Cerealshelper;
-    StationDbAdapter Stationhelper;
+    ExtraDb Alldb;
 
     private long idd;
     private String[] diarylist = new String[]{"Cheese","Cottage cheese","Butter","Milk","Ghee","Curd","Egg"};
@@ -32,84 +25,78 @@ public class ListLoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_load);
-        Fruithelper = new FruitDbAdapter(this);
-        Pulsehelper = new PulseDbAdapter(this);
-        Toilethelper = new ToiletDbAdapter(this);
-        Diaryhelper = new DiaryDbAdapter(this);
-        Spicehelper = new SpiceDbAdapter(this);
-        Oilshelper = new OilsDbAdapter(this);
-        Cerealshelper= new CerealsDbAdapter(this);
-        Stationhelper = new StationDbAdapter(this);
+        Alldb = new ExtraDb(this);
 
-        idd = Oilshelper.trunc();
-        for (int i = 0; i < oillist.length; i++) {
 
-            long id = Oilshelper.insertData(oillist[i], 100, 0, 1);
+        idd = Alldb.trunc();
+       for (int i = 0; i < oillist.length; i++) {
+
+            long id = Alldb.insertData(oillist[i], 100, 0, 1,"Oils");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
 
-        idd = Cerealshelper.trunc();
+        //idd = Alldb.trunc();
         for (int i = 0; i < cereals.length; i++) {
 
-            long id = Cerealshelper.insertData(cereals[i], 100, 0, 1);
+            long id = Alldb.insertData(cereals[i], 100, 0, 1,"Cereals");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
 
-        idd = Stationhelper.trunc();
+        //idd = Stationhelper.trunc();
         for (int i = 0; i < station.length; i++) {
 
-            long id = Stationhelper.insertData(station[i], 100, 0, 1);
+            long id = Alldb.insertData(station[i], 100, 0, 1,"Station");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
 
-         idd = Spicehelper.trunc();
+         //idd = Spicehelper.trunc();
         for (int i = 0; i < spicelist.length; i++) {
 
-            long id = Spicehelper.insertData(spicelist[i], 100, 0, 1);
+            long id = Alldb.insertData(spicelist[i], 100, 0, 1,"Spices");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
-         idd = Fruithelper.trunc();
+         //idd = Fruithelper.trunc();
         for (int i = 0; i < fruitlist.length; i++) {
 
-            long id = Fruithelper.insertData(fruitlist[i], 100, 0, 1);
+            long id = Alldb.insertData(fruitlist[i], 100, 0, 1,"Fruits");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
-         idd = Pulsehelper.trunc();
+        // idd = Pulsehelper.trunc();
         for (int i = 0; i < pulselist.length; i++) {
 
-            long id = Pulsehelper.insertData(pulselist[i], 100, 0, 100);
+            long id = Alldb.insertData(pulselist[i], 100, 0, 100,"Pulses");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
 
             }
         }
-         idd = Toilethelper.trunc();
+        // idd = Toilethelper.trunc();
         for (int i = 0; i < toiletries.length; i++) {
 
-            long id = Toilethelper.insertData(toiletries[i], 100, 0, 1);
+            long id = Alldb.insertData(toiletries[i], 100, 0, 1,"Toilet");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
             }
         }
-         idd = Diaryhelper.trunc();
+         //idd = Diaryhelper.trunc();
         for (int i = 0; i < diarylist.length; i++) {
 
-            long id = Diaryhelper.insertData(diarylist[i], 100, 0, 100);
+            long id = Alldb.insertData(diarylist[i], 100, 0, 100,"Dairy");
             if (id <= 0) {
                 Message.message(getApplicationContext(), "Insertion Unsuccessful");
             }

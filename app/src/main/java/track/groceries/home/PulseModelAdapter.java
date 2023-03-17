@@ -26,13 +26,13 @@ public class PulseModelAdapter extends RecyclerView.Adapter<PulseModelAdapter.Pu
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private PulseDbAdapter mPulseDatabase,Pulsehelper;
+    private ExtraDb mPulseDatabase,Pulsehelper;
 
     public PulseModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mPulseDatabase = new PulseDbAdapter(context);
+        mPulseDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -110,7 +110,7 @@ public class PulseModelAdapter extends RecyclerView.Adapter<PulseModelAdapter.Pu
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 removeItem(position);
-                                Pulsehelper = new PulseDbAdapter(mContext);
+                                Pulsehelper = new ExtraDb(mContext);
                                 Integer D= Pulsehelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }

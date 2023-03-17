@@ -22,7 +22,7 @@ public class ToiletActivity extends AppCompatActivity {
 
     private RecyclerView toiletrecyclerview;
     public static List<Model> toiletmodelArrayList;
-    private ToiletDbAdapter mToiletriesDatabase,mToilethelper;
+    private ExtraDb mToiletriesDatabase,mToilethelper;
     private ToiletModelAdapter toiletmodelAdapter;
 
     @Override
@@ -38,8 +38,8 @@ public class ToiletActivity extends AppCompatActivity {
         DividerItemDecoration toiletdivider = new DividerItemDecoration(toiletrecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         toiletdivider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         toiletrecyclerview.addItemDecoration(toiletdivider);
-        mToiletriesDatabase = new ToiletDbAdapter(this);
-        toiletmodelArrayList = mToiletriesDatabase.getdata();
+        mToiletriesDatabase = new ExtraDb(this);
+        toiletmodelArrayList = mToiletriesDatabase.getdata("Toilet");
         toiletmodelAdapter = new ToiletModelAdapter(this, toiletmodelArrayList, new ModelListener());
         toiletrecyclerview.setAdapter(toiletmodelAdapter);
 
@@ -89,14 +89,14 @@ public class ToiletActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    mToilethelper = new ToiletDbAdapter(getApplicationContext());
+                    mToilethelper = new ExtraDb(getApplicationContext());
                     String value = input.getText().toString().trim();
                     if ( ! value.isEmpty()) {
                         String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                         int dcheck = mToilethelper.checkproduct(inputdata);
                         if (dcheck == 0) {
-                            long id = mToilethelper.insertData(inputdata, 100, 0, 0);
-                            toiletmodelArrayList = mToilethelper.getdata();
+                            long id = mToilethelper.insertData(inputdata, 100, 0, 0,"Toilet");
+                            toiletmodelArrayList = mToilethelper.getdata("Toilet");
                             toiletmodelAdapter = new ToiletModelAdapter(getApplicationContext(), toiletmodelArrayList, new ModelListener());
                             toiletrecyclerview.setAdapter(toiletmodelAdapter);
                         } else {

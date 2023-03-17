@@ -2,6 +2,8 @@ package track.groceries.home;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ExtraDb {
     myExtraDb myhelper;
     public int flag;
+    public String value;
     private Integer redflag;
     public ExtraDb(Context context)
     {
@@ -27,13 +30,12 @@ public class ExtraDb {
         StringBuffer buffer = new StringBuffer();
         while (cursor.moveToNext()) {
             redflag = Integer.parseInt(cursor.getString(0));
-
         }
         db.close();
         return redflag;
     }
 
-    public long insertData(String name, Integer red,Integer yellow,Integer green)
+    public long insertData(String name, Integer red,Integer yellow,Integer green,String category)
     {
          SQLiteDatabase dbb = myhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -41,6 +43,8 @@ public class ExtraDb {
         contentValues.put(myExtraDb.Red_Signal, red);
         contentValues.put(myExtraDb.Yellow_Signal, yellow);
         contentValues.put(myExtraDb.Green_Signal, green);
+        contentValues.put(myExtraDb.Quantity,"1");
+        contentValues.put(myExtraDb.Category,category);
         long id = dbb.insert(myExtraDb.TABLE_NAME, null , contentValues);
         dbb.close();
         return id;
@@ -75,9 +79,10 @@ public class ExtraDb {
     }
 
     public String getRedData() {
-        String sql = "select "+myExtraDb.Product_NAME+" from " + myExtraDb.TABLE_NAME ;
+        String sql = "select "+myExtraDb.Product_NAME+" from " + myExtraDb.TABLE_NAME +" where "+myExtraDb.Red_Signal + "<25"  ;
         SQLiteDatabase db = myhelper.getReadableDatabase();
         ArrayList<Model> storedata = new ArrayList<>();
+        //String ArrayCategory[]={};
         Cursor cursor = db.rawQuery(sql, null);
         StringBuffer buffer = new StringBuffer();
         if(cursor.moveToFirst()){
@@ -108,34 +113,43 @@ public class ExtraDb {
         return buffer.toString();
     }
 
-    public String getGreenData() {
-        String sql = "select "+myExtraDb.Product_NAME+" from " + myExtraDb.TABLE_NAME +" where "+ myExtraDb.Red_Signal + ">=75";
+    public String getQuantity(String Product) {
+      /*  String sql = "select "+myExtraDb.Quantity+" from " + myExtraDb.TABLE_NAME + " where " + myExtraDb.Quantity+ " LIKE "+ "?"  ;
+        String data=Product.trim();
+        String[] whereArgs= {data};
         SQLiteDatabase db = myhelper.getReadableDatabase();
         ArrayList<Model> storedata = new ArrayList<>();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = db.rawQuery(sql, whereArgs);
+            String Quantity = cursor.getString(0);
+        cursor.close(); */
+
+        String[] column = { myExtraDb.Quantity};
+        String selection = myExtraDb.Product_NAME + " = ?";
+        String[] selectionArgs = {Product.trim()};
+        SQLiteDatabase db = myhelper.getReadableDatabase();
+        Cursor cursor = db.query(myExtraDb.TABLE_NAME, column, selection, selectionArgs, null, null, null);
         StringBuffer buffer = new StringBuffer();
-        if(cursor.moveToFirst()){
-            do{
-                String Product_Name = cursor.getString(0);
-                buffer.append( Product_Name + " \n");
-            }while (cursor.moveToNext());
+        while (cursor.moveToNext()) {
+            value = cursor.getString(0);
         }
-        cursor.close();
-        return buffer.toString();
+        db.close();
+        return value;
     }
 
-    public ArrayList<Model> getdata(){
-        String sql = "select * from " + myExtraDb.TABLE_NAME;
+    public ArrayList<Model> getdata(String category){
+        String sql = "select * from " + myExtraDb.TABLE_NAME + " where " + myExtraDb.Category+ " LIKE "+ "?" ;
         SQLiteDatabase db = myhelper.getReadableDatabase();
         ArrayList<Model> storedata = new ArrayList<>();
-        Cursor cursor = db.rawQuery(sql, null);
+        String ArrayCategory[] = {category};
+        Cursor cursor = db.rawQuery(sql, ArrayCategory);
         if(cursor.moveToFirst()){
             do{
-                String Product_Name = cursor.getString(1);
-                int Red_Signal = Integer.parseInt(cursor.getString(2));
-                int Yellow_Signal = Integer.parseInt(cursor.getString(3));
-                int Green_Signal = Integer.parseInt(cursor.getString(4));
-                storedata.add(new Model(Product_Name,Red_Signal,Yellow_Signal,Green_Signal));
+                     String Product_Name = cursor.getString(1);
+                    int Red_Signal = Integer.parseInt(cursor.getString(2));
+                    int Yellow_Signal = Integer.parseInt(cursor.getString(3));
+                    int Green_Signal = Integer.parseInt(cursor.getString(4));
+                    String Category = cursor.getString(6);
+                    storedata.add(new Model(Product_Name, Red_Signal, Yellow_Signal, Green_Signal,Category));
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -174,11 +188,22 @@ public class ExtraDb {
 
     public int updatedata(String Product_Name , Integer Red_Signal,Integer Yellow_Signal,Integer Green_Signal)
     { String data=Product_Name.trim();
+        String[] whereArgs= {data};
         SQLiteDatabase db = myhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(myExtraDb.Red_Signal,Red_Signal);
         contentValues.put(myExtraDb.Yellow_Signal,Yellow_Signal);
         contentValues.put(myExtraDb.Green_Signal,Green_Signal);
+        int count =db.update(myExtraDb.TABLE_NAME,contentValues, myExtraDb.Product_NAME+" = ?",whereArgs );
+        db.close();
+        return count;
+    }
+
+    public int updatequantity(String Product_Name , String Quantity)
+    {   String data=Product_Name.trim();
+        SQLiteDatabase db = myhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(myExtraDb.Quantity,Quantity);
         String[] whereArgs= {data};
         int count =db.update(myExtraDb.TABLE_NAME,contentValues, myExtraDb.Product_NAME+" = ?",whereArgs );
         db.close();
@@ -195,9 +220,14 @@ public class ExtraDb {
         private static final String Red_Signal= "Red_Signal";    // Column III
         private static final String Yellow_Signal= "Yellow_Signal";    // Column III
         private static final String Green_Signal= "Green_Signal";    // Column IV
-
-        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+
-                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+Product_NAME+" VARCHAR(255) ,"+ Red_Signal+" INTEGER,"+Yellow_Signal+" INTEGER,"+Green_Signal+" INTEGER);";
+        private static final String Quantity="Quantity";
+        private static final String Category="Category";
+        private static final String CREATE_TABLE =
+                "CREATE TABLE "+TABLE_NAME+
+                " ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        ""+Product_NAME+" VARCHAR(255) ,"
+                        + Red_Signal+" INTEGER,"+Yellow_Signal+" INTEGER,"+Green_Signal+" INTEGER,"+Quantity+" VARCHAR(255), "
+                        +Category+" VARCHAR(255) );";
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
         private Context context;
 

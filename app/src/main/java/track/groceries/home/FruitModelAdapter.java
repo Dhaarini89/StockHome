@@ -25,14 +25,14 @@ public class FruitModelAdapter extends RecyclerView.Adapter<FruitModelAdapter.Fr
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private FruitDbAdapter mFruitDatabase;
-    private FruitDbAdapter Fruithelper;
+    private ExtraDb mFruitDatabase;
+    private ExtraDb Fruithelper;
 
     public FruitModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mFruitDatabase = new FruitDbAdapter(context);
+        mFruitDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -120,7 +120,7 @@ public class FruitModelAdapter extends RecyclerView.Adapter<FruitModelAdapter.Fr
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 removeItem(position);
-                                Fruithelper = new FruitDbAdapter(mContext);
+                                Fruithelper = new ExtraDb(mContext);
                                 Integer D= Fruithelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }

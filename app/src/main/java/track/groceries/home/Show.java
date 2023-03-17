@@ -7,19 +7,24 @@ public class Show implements Parcelable {
 
 
     private String datalist;
-
+    private String count;
     private int id;
 
-    public Show( String list,Integer id)
+    public Show( String list,Integer id,String count)
     {
 
         this.datalist = list;
         this.id = id;
+        this.count = count;
 
     }
     public int getId() {
         return id;
     }
+    public String getcount() {
+        
+        return count;}
+
     public String getdataList() {
         return datalist;
     }

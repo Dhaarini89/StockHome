@@ -25,14 +25,14 @@ public class DiaryModelAdapter extends RecyclerView.Adapter<DiaryModelAdapter.Di
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private DiaryDbAdapter mDiaryDatabase,Dairyhelper;
+    private ExtraDb mDiaryDatabase,Dairyhelper;
 
 
     public DiaryModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mDiaryDatabase = new DiaryDbAdapter(context);
+        mDiaryDatabase = new ExtraDb(context);
     }
     public interface CustomAdapterListener {
         void onModelSelected(Model model, View view);
@@ -97,7 +97,7 @@ public class DiaryModelAdapter extends RecyclerView.Adapter<DiaryModelAdapter.Di
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DiaryModelAdapter.DiaryModelViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final DiaryModelAdapter.DiaryModelViewHolder holder, final int position) {
         Integer RedFlg;
         final Model model = mModelList.get(position);
         LayerDrawable progressdraw = (LayerDrawable)holder.seekbar.getProgressDrawable();
@@ -107,14 +107,13 @@ public class DiaryModelAdapter extends RecyclerView.Adapter<DiaryModelAdapter.Di
         holder.Diary.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // removeItem(position);
                 new AlertDialog.Builder(mContext,R.style.sample)
                         .setMessage("Are you sure you want to delete "+model.getFruit()+"?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                removeItem(position);
-                                Dairyhelper = new DiaryDbAdapter(mContext);
+                                removeItem(holder.getAdapterPosition());
+                                Dairyhelper = new ExtraDb(mContext);
                                 Integer D= Dairyhelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }
@@ -122,7 +121,7 @@ public class DiaryModelAdapter extends RecyclerView.Adapter<DiaryModelAdapter.Di
                         .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                notifyItemChanged(position);
+                                notifyItemChanged(holder.getAdapterPosition());
                                 dialog.cancel();
                             }
                         })

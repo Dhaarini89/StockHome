@@ -25,14 +25,13 @@ public class OilsModelAdapter extends RecyclerView.Adapter<OilsModelAdapter.Oils
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private OilsDbAdapter mOilsDatabase;
-    private OilsDbAdapter Oilshelper;
+    private ExtraDb mOilsDatabase,Oilshelper;
 
     public OilsModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mOilsDatabase = new OilsDbAdapter(context);
+        mOilsDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -120,7 +119,7 @@ public class OilsModelAdapter extends RecyclerView.Adapter<OilsModelAdapter.Oils
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 removeItem(position);
-                                Oilshelper = new OilsDbAdapter(mContext);
+                                Oilshelper = new ExtraDb(mContext);
                                 Integer D= Oilshelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }

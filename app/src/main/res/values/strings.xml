@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Grocery Tracker</string>
+    <string name="app_name">Track My Grocery Items</string>
     <string name="action_share">Share List</string>
     <string name="action_stock">Out of Stock</string>
     <string name="action_trash">Trash</string>

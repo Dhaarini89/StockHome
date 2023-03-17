@@ -26,12 +26,12 @@ public class SpiceModelAdapter extends RecyclerView.Adapter<SpiceModelAdapter.Sp
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private SpiceDbAdapter mSpiceDatabase;
+    private ExtraDb mSpiceDatabase;
     public  SpiceModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mSpiceDatabase = new SpiceDbAdapter(context);
+        mSpiceDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -108,7 +108,7 @@ public class SpiceModelAdapter extends RecyclerView.Adapter<SpiceModelAdapter.Sp
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 removeItem(position);
-                                mSpiceDatabase = new SpiceDbAdapter(mContext);
+                                mSpiceDatabase = new ExtraDb(mContext);
                                 Integer D= mSpiceDatabase.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }

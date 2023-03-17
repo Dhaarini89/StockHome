@@ -25,9 +25,9 @@ public class CerealsActivity extends AppCompatActivity {
 
     public static RecyclerView Cerealsrecyclerview;
     public static List<Model> CerealsmodelArrayList;
-    private CerealsDbAdapter Cerealshelper;
+    private ExtraDb Cerealshelper,mCerealsDatabase;
     private String product;
-    private CerealsDbAdapter mCerealsDatabase;
+
     private CerealsModelAdapter CerealsmodelAdapter;
 
 
@@ -43,8 +43,8 @@ public class CerealsActivity extends AppCompatActivity {
         DividerItemDecoration Cerealsdivider = new DividerItemDecoration(Cerealsrecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         Cerealsdivider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         Cerealsrecyclerview.addItemDecoration(Cerealsdivider);
-        mCerealsDatabase = new CerealsDbAdapter(this);
-        CerealsmodelArrayList = mCerealsDatabase.getdata();
+        mCerealsDatabase = new ExtraDb(this);
+        CerealsmodelArrayList = mCerealsDatabase.getdata("Cereals");
         CerealsmodelAdapter = new CerealsModelAdapter(this, CerealsmodelArrayList, new CerealsModelListener());
         Cerealsrecyclerview.setAdapter(CerealsmodelAdapter);
 
@@ -85,15 +85,16 @@ public class CerealsActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Cerealshelper = new CerealsDbAdapter(getApplicationContext());
+                        Cerealshelper = new ExtraDb(getApplicationContext());
                         String value = input.getText().toString().trim();
+
                         if (!value.isEmpty()) {
                             String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                             int dcheck = Cerealshelper.checkproduct(inputdata);
                             if (dcheck == 0) {
 
-                                long id = Cerealshelper.insertData(inputdata, 100, 0, 0);
-                                CerealsmodelArrayList = Cerealshelper.getdata();
+                                long id = Cerealshelper.insertData(inputdata, 100, 0, 0,"Cereals");
+                                CerealsmodelArrayList = Cerealshelper.getdata("Cereals");
                                 CerealsmodelAdapter = new CerealsModelAdapter(getApplicationContext(), CerealsmodelArrayList, new CerealsModelListener());
                                 Cerealsrecyclerview.setAdapter(CerealsmodelAdapter);
                             } else {

@@ -25,14 +25,13 @@ public class CerealsModelAdapter extends RecyclerView.Adapter<CerealsModelAdapte
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private CerealsDbAdapter mCerealsDatabase;
-    private CerealsDbAdapter Cerealshelper;
+    private ExtraDb mCerealsDatabase,Cerealshelper;
 
     public CerealsModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mCerealsDatabase = new CerealsDbAdapter(context);
+        mCerealsDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -103,7 +102,7 @@ public class CerealsModelAdapter extends RecyclerView.Adapter<CerealsModelAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CerealsModelAdapter.CerealsModelViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final CerealsModelAdapter.CerealsModelViewHolder holder, final int position) {
         Integer RedFlg, YellowFlg, GreenFlg;
         final Model model = mModelList.get(position);
         LayerDrawable progressdraw = (LayerDrawable)holder.seekbar.getProgressDrawable();
@@ -119,8 +118,8 @@ public class CerealsModelAdapter extends RecyclerView.Adapter<CerealsModelAdapte
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                removeItem(position);
-                                Cerealshelper = new CerealsDbAdapter(mContext);
+                                removeItem(holder.getAdapterPosition());
+                                Cerealshelper = new ExtraDb(mContext);
                                 Integer D= Cerealshelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }
@@ -128,7 +127,7 @@ public class CerealsModelAdapter extends RecyclerView.Adapter<CerealsModelAdapte
                         .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                notifyItemChanged(position);
+                                notifyItemChanged(holder.getAdapterPosition());
                                 dialog.cancel();
                             }
                         })
@@ -162,9 +161,6 @@ public class CerealsModelAdapter extends RecyclerView.Adapter<CerealsModelAdapte
         }
 
     }
-
-
-
 
 
 

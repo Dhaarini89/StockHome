@@ -23,7 +23,7 @@ public class SpiceActivity extends AppCompatActivity {
     private RecyclerView spicerecyclerview;
     public static List<Model> spicemodelArrayList;
 
-    private SpiceDbAdapter mSpiceDatabase,mSpicehelper;
+    private ExtraDb mSpiceDatabase,mSpicehelper;
     private SpiceModelAdapter spicemodelAdapter;
 
     @Override
@@ -38,8 +38,8 @@ public class SpiceActivity extends AppCompatActivity {
         DividerItemDecoration spicedivider = new DividerItemDecoration(spicerecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         spicedivider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         spicerecyclerview.addItemDecoration(spicedivider);
-        mSpiceDatabase = new SpiceDbAdapter(this);
-        spicemodelArrayList = mSpiceDatabase.getdata();
+        mSpiceDatabase = new ExtraDb(this);
+        spicemodelArrayList = mSpiceDatabase.getdata("Spices");
         spicemodelAdapter = new SpiceModelAdapter(this, spicemodelArrayList, new SpiceModelListener());
         spicerecyclerview.setAdapter(spicemodelAdapter);
 
@@ -81,15 +81,15 @@ public class SpiceActivity extends AppCompatActivity {
                  builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialogInterface, int i) {
-                         mSpicehelper = new SpiceDbAdapter(getApplicationContext());
+                         mSpicehelper = new ExtraDb(getApplicationContext());
                          String value = input.getText().toString();
                          if (! value.isEmpty()) {
                              String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                              int dcheck = mSpicehelper.checkproduct(inputdata);
                              if (dcheck == 0) {
 
-                                 long id = mSpicehelper.insertData(inputdata, 100, 0, 0);
-                                 spicemodelArrayList = mSpicehelper.getdata();
+                                 long id = mSpicehelper.insertData(inputdata, 100, 0, 0,"Spices");
+                                 spicemodelArrayList = mSpicehelper.getdata("Spices");
                                  spicemodelAdapter = new SpiceModelAdapter(getApplicationContext(), spicemodelArrayList, new SpiceModelListener());
                                  spicerecyclerview.setAdapter(spicemodelAdapter);
                              } else {

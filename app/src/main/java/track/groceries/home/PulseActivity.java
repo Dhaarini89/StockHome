@@ -22,8 +22,8 @@ public class PulseActivity extends AppCompatActivity {
 
     private RecyclerView pulserecyclerview;
     public static List<Model> pulsemodelArrayList;
-    private PulseDbAdapter mPulsesDatabase;
-    private PulseDbAdapter mPulsehelper;
+
+    private ExtraDb mPulsehelper,mPulsesDatabase;
     private PulseModelAdapter pulsemodelAdapter;
 
     @Override
@@ -38,8 +38,8 @@ public class PulseActivity extends AppCompatActivity {
         DividerItemDecoration pulsedivider = new DividerItemDecoration(pulserecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         pulsedivider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         pulserecyclerview.addItemDecoration(pulsedivider);
-        mPulsesDatabase = new PulseDbAdapter(this);
-        pulsemodelArrayList = mPulsesDatabase.getdata();
+        mPulsesDatabase = new ExtraDb(this);
+        pulsemodelArrayList = mPulsesDatabase.getdata("Pulses");
         pulsemodelAdapter = new PulseModelAdapter(this, pulsemodelArrayList, new PulseModelListener());
         pulserecyclerview.setAdapter(pulsemodelAdapter);
 
@@ -80,15 +80,15 @@ public class PulseActivity extends AppCompatActivity {
                   builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                       @Override
                       public void onClick(DialogInterface dialogInterface, int i) {
-                          mPulsehelper = new PulseDbAdapter(getApplicationContext());
+                          mPulsehelper = new ExtraDb(getApplicationContext());
                           String value = input.getText().toString().trim();
                           if (!value.isEmpty()) {
                               String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                               int dcheck = mPulsehelper.checkproduct(inputdata);
                               if (dcheck == 0) {
 
-                                  long id = mPulsehelper.insertData(inputdata, 100, 0, 0);
-                                  pulsemodelArrayList = mPulsehelper.getdata();
+                                  long id = mPulsehelper.insertData(inputdata, 100, 0, 0,"Pulses");
+                                  pulsemodelArrayList = mPulsehelper.getdata("Pulses");
                                   pulsemodelAdapter = new PulseModelAdapter(getApplicationContext(), pulsemodelArrayList, new PulseModelListener());
                                   pulserecyclerview.setAdapter(pulsemodelAdapter);
                               } else {

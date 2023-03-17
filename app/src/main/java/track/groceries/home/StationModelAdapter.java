@@ -25,14 +25,13 @@ public class StationModelAdapter extends RecyclerView.Adapter<StationModelAdapte
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private StationDbAdapter mStationDatabase;
-    private StationDbAdapter Stationhelper;
+    private ExtraDb mStationDatabase,Stationhelper;
 
     public StationModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mStationDatabase = new StationDbAdapter(context);
+        mStationDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -120,7 +119,7 @@ public class StationModelAdapter extends RecyclerView.Adapter<StationModelAdapte
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 removeItem(position);
-                                Stationhelper = new StationDbAdapter(mContext);
+                                Stationhelper = new ExtraDb(mContext);
                                 Integer D= Stationhelper.deleteProduct(model.getFruit());
                                 dialog.cancel();
                             }

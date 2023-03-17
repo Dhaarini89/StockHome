@@ -40,19 +40,9 @@ public class MainActivity extends AppCompatActivity {
     public static List<Model> modelArrayList;
     private String[] navlist = new String[]{"Once in a week","Once in 2 weeks"};
     private static int count;
-    private SpiceDbAdapter mSpiceDatabase;
-    private DiaryDbAdapter mDiaryDatabase;
-    private ToiletDbAdapter mToiletriesDatabase;
-    private PulseDbAdapter mPulsesDatabase;
-     private OilsDbAdapter mOilsDatabase;
-    private StationDbAdapter mStationDatabase;
-    private CerealsDbAdapter mCerealsDatabase;
-    private FruitDbAdapter mFruitDatabase,Fruithelper;
-    private ToiletDbAdapter Toilethelper;
-    private DiaryDbAdapter Diaryhelper;
-    private PulseDbAdapter Pulsehelper;
-    private SpiceDbAdapter Spicehelper;
-  @Override
+
+    private ExtraDb AllDb,mFruitDatabase,Fruithelper;
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -66,13 +56,6 @@ public class MainActivity extends AppCompatActivity {
         }
         prefs.edit().putInt("version_code", 0).commit();
 
-
-
-
-        //mRecyclerView = findViewById(R.id.recycler);
-        //loadData();
-        //NavigatorAdapter navigatorAdapter = new NavigatorAdapter(this, mNavigatorList, new NavigatorListener());
-        //mRecyclerView.setAdapter(navigatorAdapter);
         Button B = findViewById(R.id.Show_List);
         B.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,55 +135,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_reminder:
-                // Alert can be send once in a week or once in 2 weeks to update for every product in each category  //
-                final RadioButton week,week2,week3;
-                Button submit;
-                final Dialog Ndialog = new Dialog(this);
-                Ndialog.setContentView(R.layout.activity_notification);
-                week = (RadioButton) Ndialog.findViewById(R.id.week);
-                week2 = (RadioButton) Ndialog.findViewById(R.id.week2);
-                week3 = (RadioButton) Ndialog.findViewById(R.id.week3);
-                Ndialog.show();
-
-                  submit = (Button) Ndialog.findViewById(R.id.submitButton);
-                submit.setOnClickListener(new View.OnClickListener() {
-                                              @Override
-                                              public void onClick(View v) {
-                                                  if (week.isChecked()) {
-                                                      // Count is give 7 or 15 based on Once in a week or once in 2 week  //
-
-                                                      count = 7;
-
-
-                                                  }
-                                                  if(week2.isChecked())
-                                                  {
-                                                      count = 15;
-                                                  }
-                                                  if(week3.isChecked())
-                                                  {
-                                                      count = 3;
-                                                  }
-                                                  AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                                                  String data = String.valueOf(AlarmManager.INTERVAL_FIFTEEN_MINUTES*count);
-                                                  Calendar calendar = Calendar.getInstance();
-                                                  calendar.set(Calendar.HOUR_OF_DAY,12);
-                                                  calendar.set(Calendar.MINUTE,00);
-                                                   ComponentName reciever = new ComponentName(getApplicationContext(),Notification_Reciever.class);
-                                                  PackageManager pm = getApplicationContext().getPackageManager();
-                                                  pm.setComponentEnabledSetting(reciever,PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
-                                                  Intent intent = new Intent(getApplicationContext(), Notification_Reciever.class);
-                                                  PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,0);
-                                                  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY*count,pendingIntent);
-                                                  Ndialog.dismiss();
-                                              } });
-
-
-
-
-
-
-
+                Intent I = new Intent(MainActivity.this, Notify.class);
+                startActivity(I);
                 return true;
 
             case R.id.action_contact:
@@ -250,14 +186,14 @@ public class MainActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(View v) {
                                                         String data;
-                                                        mFruitDatabase = new FruitDbAdapter(getApplicationContext());
+                                                        AllDb = new ExtraDb(getApplicationContext());
                                                         String Heading = "Out of Stock List" + "\n";
                                                         data = Heading;
-                                                        String fdata = mFruitDatabase.getRedData();
+                                                        String fdata = AllDb.getRedData();
                                                         if (!TextUtils.isEmpty(fdata)) {
                                                             data = data + fdata;
                                                         }
-                                                        mSpiceDatabase = new SpiceDbAdapter(getApplicationContext());
+                                                   /*     //mSpiceDatabase = new SpiceDbAdapter(getApplicationContext());
                                                         String spicedata = mSpiceDatabase.getRedData();
                                                         if (!TextUtils.isEmpty(spicedata)) {
                                                             data = data + spicedata;
@@ -292,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                                                         if (!TextUtils.isEmpty(pulsedata)) {
                                                             data = data + pulsedata;
                                                         }
-
+                                                        */
 
                                                         Intent share_intent = new Intent();
                                                         share_intent.setAction(Intent.ACTION_SEND);
@@ -322,50 +258,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             String data;
-                            mFruitDatabase = new FruitDbAdapter(getApplicationContext());
+                            AllDb = new ExtraDb(getApplicationContext());
                             String Heading = "Items in Use" + "\n";
                             data = Heading;
-                            String fdata = mFruitDatabase.getYellowData();
+                            String fdata = AllDb.getYellowData();
                             if (!TextUtils.isEmpty(fdata)) {
                                 data = data + fdata;
-                            }
-                            mSpiceDatabase = new SpiceDbAdapter(getApplicationContext());
-                            String spicedata = mSpiceDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(spicedata)) {
-                                data = data + spicedata;
-                            }
-                            mDiaryDatabase = new DiaryDbAdapter(getApplicationContext());
-                            String diarydata = mDiaryDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(diarydata)) {
-                                data = data + diarydata;
-                            }
-                            mToiletriesDatabase = new ToiletDbAdapter(getApplicationContext());
-                            String toiletdata = mToiletriesDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(toiletdata)) {
-                                data = data + toiletdata;
-                            }
-                            mPulsesDatabase = new PulseDbAdapter(getApplicationContext());
-                            String pulsedata = mPulsesDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(pulsedata)) {
-                                data = data + pulsedata;
-                            }
-
-                            mCerealsDatabase = new CerealsDbAdapter(getApplicationContext());
-                            String cerealsdata = mCerealsDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(cerealsdata)) {
-                                data = data + cerealsdata;
-                            }
-
-                            mOilsDatabase = new OilsDbAdapter(getApplicationContext());
-                            String oilsdata = mOilsDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(oilsdata)) {
-                                data = data + oilsdata;
-                            }
-
-                            mStationDatabase = new StationDbAdapter(getApplicationContext());
-                            String stationdata = mStationDatabase.getYellowData();
-                            if (!TextUtils.isEmpty(stationdata)) {
-                                data = data + stationdata;
                             }
 
                             Intent share_intent = new Intent();

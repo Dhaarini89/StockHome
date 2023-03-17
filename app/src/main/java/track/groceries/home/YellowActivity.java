@@ -15,15 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class YellowActivity extends AppCompatActivity {
-    private SpiceDbAdapter mSpiceDatabase;
-    private DiaryDbAdapter mDiaryDatabase;
-    private ToiletDbAdapter mToiletriesDatabase;
-    private PulseDbAdapter mPulsesDatabase;
-     private FruitDbAdapter mFruitDatabase;
-     private CerealsDbAdapter mCerealsDatabase;
-     private StationDbAdapter mStationDatabase;
-     private OilsDbAdapter mOilsDatabase;
-    RecyclerView recyclerView;
+       private ExtraDb mFruitDatabase;
+      RecyclerView recyclerView;
     ConstraintLayout framelayout;
     public static List<Show> mShowList;
     private ShowAdapter SA;
@@ -36,7 +29,7 @@ public class YellowActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_yellow);
         framelayout = findViewById(R.id.Yellow);
-        mFruitDatabase = new FruitDbAdapter(getApplicationContext());
+        mFruitDatabase = new ExtraDb(getApplicationContext());
         data_fruit = mFruitDatabase.getYellowData();
         String Heading = "Items in Use";
         mShowList = new ArrayList<>();
@@ -44,16 +37,18 @@ public class YellowActivity extends AppCompatActivity {
         String data[] = data_fruit.split("\n");
         for (int i = 0; i < data.length;i++) {
             if(!TextUtils.isEmpty(data[i])) {
-                mShowList.add(new Show(data[i], counter));
+                mShowList.add(new Show(data[i], counter,"1"));
                 counter = counter + 1;
             }
         }
+
+        /*
         mSpiceDatabase = new SpiceDbAdapter(getApplicationContext());
         String spicedata = mSpiceDatabase.getYellowData();
         String sdata[] = spicedata.split("\n");
         for (int i = 0; i < sdata.length; i++) {
             if(!TextUtils.isEmpty(sdata[i])) {
-                mShowList.add(new Show(sdata[i], counter));
+                mShowList.add(new Show(sdata[i], counter,1));
                 counter = counter + 1;
             }
         }
@@ -62,7 +57,7 @@ public class YellowActivity extends AppCompatActivity {
         String ddata[] = diarydata.split("\n");
         for (int i = 0; i < ddata.length; i++) {
             if(!TextUtils.isEmpty(ddata[i])) {
-                mShowList.add(new Show(ddata[i], counter));
+                mShowList.add(new Show(ddata[i], counter,1));
                 counter = counter + 1;
             }
         }
@@ -71,7 +66,7 @@ public class YellowActivity extends AppCompatActivity {
         String tdata[] = toiletdata.split("\n");
         for (int i = 0; i < tdata.length; i++) {
             if(!TextUtils.isEmpty(tdata[i])) {
-                mShowList.add(new Show(tdata[i], counter));
+                mShowList.add(new Show(tdata[i], counter,1));
                 counter = counter + 1;
             }
         }
@@ -81,7 +76,7 @@ public class YellowActivity extends AppCompatActivity {
         String pdata[] = pulsedata.split("\n");
         for (int i = 0; i < pdata.length; i++) {
             if(!TextUtils.isEmpty(pdata[i])) {
-                mShowList.add(new Show(pdata[i], counter));
+                mShowList.add(new Show(pdata[i], counter,1));
                 counter = counter + 1;
             }
         }
@@ -93,7 +88,7 @@ public class YellowActivity extends AppCompatActivity {
         {
             if(!TextUtils.isEmpty(cerdata[i]))
             {
-                mShowList.add(new Show(cerdata[i],counter));
+                mShowList.add(new Show(cerdata[i],counter,1));
                 counter = counter +1;
 
             }
@@ -106,7 +101,7 @@ public class YellowActivity extends AppCompatActivity {
         {
             if(!TextUtils.isEmpty(oildata[i]))
             {
-                mShowList.add(new Show(oildata[i],counter));
+                mShowList.add(new Show(oildata[i],counter,1));
                 counter = counter +1;
 
             }
@@ -119,13 +114,13 @@ public class YellowActivity extends AppCompatActivity {
         {
             if(!TextUtils.isEmpty(statdata[i]))
             {
-                mShowList.add(new Show(statdata[i],counter));
+                mShowList.add(new Show(statdata[i],counter,1));
                 counter = counter +1;
 
             }
         }
 
-
+*/
         recyclerView = findViewById(R.id.RView);
         LinearLayoutManager showlayoutManager = new LinearLayoutManager(this);
         showlayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -136,7 +131,7 @@ public class YellowActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_show, menu);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
     }
 

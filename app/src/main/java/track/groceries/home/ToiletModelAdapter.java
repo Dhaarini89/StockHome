@@ -26,13 +26,13 @@ public class ToiletModelAdapter extends RecyclerView.Adapter<ToiletModelAdapter.
     private Context mContext;
     private List<Model> mModelList;
     private CustomAdapterListener mListener;
-    private ToiletDbAdapter mToiletDatabase;
+    private ExtraDb mToiletDatabase;
 
     public ToiletModelAdapter(Context context, List<Model> modelList, CustomAdapterListener listener) {
         this.mContext = context;
         this.mModelList = modelList;
         this.mListener = listener;
-        mToiletDatabase = new ToiletDbAdapter(context);
+        mToiletDatabase = new ExtraDb(context);
     }
 
     public interface CustomAdapterListener {
@@ -115,7 +115,7 @@ public class ToiletModelAdapter extends RecyclerView.Adapter<ToiletModelAdapter.
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     removeItem(position);
-                                    mToiletDatabase = new ToiletDbAdapter(mContext);
+                                    mToiletDatabase = new ExtraDb(mContext);
                                     Integer D= mToiletDatabase.deleteProduct(model.getFruit());
                                     dialog.cancel();
                                 }

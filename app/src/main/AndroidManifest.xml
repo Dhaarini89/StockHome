@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="track.groceries.home">
 
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
@@ -13,14 +13,26 @@
         android:roundIcon="@drawable/gtrack"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="track.groceries.home.StationActivity"></activity>
-        <activity android:name="track.groceries.home.CerealsActivity" />
-        <activity android:name="track.groceries.home.OilsActivity" />
-        <activity android:name="track.groceries.home.YellowActivity"
-            android:label="@string/In_Progress"/>
-        <activity android:name="track.groceries.home.DeleteActivity"
-            android:label="@string/OUT_OF_STOCK"/>
-        <activity android:name="track.groceries.home.SplashActivity">
+        <activity android:name="track.groceries.home.QuantityActivity"></activity>
+        <activity
+            android:name=".Notify"
+            android:label="Notify me"></activity>
+        <activity
+            android:name=".StationActivity"
+            android:label="Stationery" />
+        <activity
+            android:name=".CerealsActivity"
+            android:label="Cereals/Bread/Rice" />
+        <activity
+            android:name=".OilsActivity"
+            android:label="CookingOils/Beverages" />
+        <activity
+            android:name=".YellowActivity"
+            android:label="@string/In_Progress" />
+        <activity
+            android:name=".DeleteActivity"
+            android:label="@string/OUT_OF_STOCK" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,29 +40,36 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="track.groceries.home.Notification_Reciever"
+        <receiver
+            android:name=".Notification_Reciever"
             android:enabled="false">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED"></action>
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
 
-
         <activity
-            android:name="track.groceries.home.ShowStockActivity"
-            android:label="@string/outofstock_list" />
-        <activity android:name="track.groceries.home.ToiletActivity" />
-        <activity android:name="track.groceries.home.SpiceActivity" />
-        <activity android:name="track.groceries.home.DiaryActivity" />
-        <activity android:name="track.groceries.home.PulseActivity" />
-        <activity android:name="track.groceries.home.ListLoadActivity" />
-        <activity android:name="track.groceries.home.NextActivity" />
+            android:name=".ToiletActivity"
+            android:label="Cleaning/Toiletries" />
         <activity
-            android:name="track.groceries.home.MainActivity"
+            android:name=".SpiceActivity"
+            android:label="Spices" />
+        <activity
+            android:name=".DiaryActivity"
+            android:label="Dairy/Meat Products" />
+        <activity
+            android:name=".PulseActivity"
+            android:label="Pulses/Nuts" />
+        <activity android:name=".ListLoadActivity" />
+        <activity
+            android:name=".NextActivity"
+            android:label="Fruits/Vegetables" />
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="track.groceries.home.NotificationActivity"
+            android:name=".NotificationActivity"
             android:excludeFromRecents="true"
             android:taskAffinity="" />
     </application>

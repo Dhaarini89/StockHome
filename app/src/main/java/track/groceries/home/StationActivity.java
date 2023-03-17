@@ -22,9 +22,9 @@ public class StationActivity extends AppCompatActivity {
 
     private RecyclerView stationrecyclerView;
     public static List<Model> stationmodelArrayList;
-    private StationDbAdapter mStationDatabase,helper;
+    private ExtraDb mStationDatabase,helper;
     private StationModelAdapter stationmodelAdapter;
-    private StationDbAdapter Stationhelper;
+    private ExtraDb Stationhelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class StationActivity extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(stationrecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         stationrecyclerView.addItemDecoration(divider);
-        mStationDatabase = new StationDbAdapter(this);
-        stationmodelArrayList = mStationDatabase.getdata();
+        mStationDatabase = new ExtraDb(this);
+        stationmodelArrayList = mStationDatabase.getdata("Station");
         stationmodelAdapter = new StationModelAdapter(this, stationmodelArrayList, new StationModelListener());
         stationrecyclerView.setAdapter(stationmodelAdapter);
 
@@ -83,15 +83,15 @@ public class StationActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        helper = new StationDbAdapter(getApplicationContext());
+                        helper = new ExtraDb(getApplicationContext());
                         String value = input.getText().toString().trim();
                         if ( ! value.isEmpty()) {
                             String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                             int dcheck = helper.checkproduct(inputdata);
                             if (dcheck == 0) {
 
-                                long id = helper.insertData(inputdata, 100, 0, 0);
-                                stationmodelArrayList = helper.getdata();
+                                long id = helper.insertData(inputdata, 100, 0, 0,"Station");
+                                stationmodelArrayList = helper.getdata("Station");
                                 stationmodelAdapter = new StationModelAdapter(getApplicationContext(), stationmodelArrayList, new StationModelListener());
                                 stationrecyclerView.setAdapter(stationmodelAdapter);
 

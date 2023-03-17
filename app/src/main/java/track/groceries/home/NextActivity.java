@@ -22,9 +22,9 @@ public class NextActivity extends AppCompatActivity {
 
     private RecyclerView fruitrecyclerView;
     public static List<Model> fruitmodelArrayList;
-    private FruitDbAdapter mFruitDatabase,helper;
+    private ExtraDb mFruitDatabase,helper;
     private FruitModelAdapter fruitmodelAdapter;
-    private FruitDbAdapter Fruithelper;
+    private ExtraDb Fruithelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class NextActivity extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(fruitrecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         fruitrecyclerView.addItemDecoration(divider);
-        mFruitDatabase = new FruitDbAdapter(this);
-        fruitmodelArrayList = mFruitDatabase.getdata();
+        mFruitDatabase = new ExtraDb(this);
+        fruitmodelArrayList = mFruitDatabase.getdata("Fruits");
         fruitmodelAdapter = new FruitModelAdapter(this, fruitmodelArrayList, new FruitModelListener());
         fruitrecyclerView.setAdapter(fruitmodelAdapter);
 
@@ -83,14 +83,14 @@ public class NextActivity extends AppCompatActivity {
                  builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialogInterface, int i) {
-                         helper = new FruitDbAdapter(getApplicationContext());
+                         helper = new ExtraDb(getApplicationContext());
                          String value = input.getText().toString().trim();
                          if (! value.isEmpty()) {
                              String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                              int dcheck = helper.checkproduct(inputdata);
                              if (dcheck == 0) {
-                                 long id = helper.insertData(inputdata, 100, 0, 0);
-                                 fruitmodelArrayList = helper.getdata();
+                                 long id = helper.insertData(inputdata, 100, 0, 0,"Fruits");
+                                 fruitmodelArrayList = helper.getdata("Fruits");
                                  fruitmodelAdapter = new FruitModelAdapter(getApplicationContext(), fruitmodelArrayList, new FruitModelListener());
                                  fruitrecyclerView.setAdapter(fruitmodelAdapter);
                              } else {

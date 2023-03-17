@@ -23,9 +23,8 @@ public class DiaryActivity extends AppCompatActivity {
 
     public static RecyclerView diaryrecyclerview;
     public static List<Model> diarymodelArrayList;
-    private DiaryDbAdapter Diaryhelper;
+    private ExtraDb Diaryhelper,mDiaryDatabase;
     private String product;
-    private DiaryDbAdapter mDiaryDatabase;
     private DiaryModelAdapter diarymodelAdapter;
 
 
@@ -41,8 +40,8 @@ public class DiaryActivity extends AppCompatActivity {
         DividerItemDecoration diarydivider = new DividerItemDecoration(diaryrecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         diarydivider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.my_custom_divider));
         diaryrecyclerview.addItemDecoration(diarydivider);
-        mDiaryDatabase = new DiaryDbAdapter(this);
-        diarymodelArrayList = mDiaryDatabase.getdata();
+        mDiaryDatabase = new ExtraDb(this);
+        diarymodelArrayList = mDiaryDatabase.getdata("Dairy");
         diarymodelAdapter = new DiaryModelAdapter(this, diarymodelArrayList, new DiaryModelListener());
         diaryrecyclerview.setAdapter(diarymodelAdapter);
 
@@ -83,15 +82,15 @@ public class DiaryActivity extends AppCompatActivity {
                   builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                       @Override
                       public void onClick(DialogInterface dialogInterface, int i) {
-                          Diaryhelper = new DiaryDbAdapter(getApplicationContext());
+                          Diaryhelper = new ExtraDb(getApplicationContext());
                           String value = input.getText().toString().trim();
                           if (!value.isEmpty()) {
                               String inputdata = value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
                               int dcheck = Diaryhelper.checkproduct(inputdata);
                               if (dcheck == 0) {
 
-                                  long id = Diaryhelper.insertData(inputdata, 100, 0, 0);
-                                  diarymodelArrayList = Diaryhelper.getdata();
+                                  long id = Diaryhelper.insertData(inputdata, 100, 0, 0,"Dairy");
+                                  diarymodelArrayList = Diaryhelper.getdata("Dairy");
                                   diarymodelAdapter = new DiaryModelAdapter(getApplicationContext(), diarymodelArrayList, new DiaryModelListener());
                                   diaryrecyclerview.setAdapter(diarymodelAdapter);
 
